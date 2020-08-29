@@ -51,7 +51,7 @@ jobs:
     - name: UPload the APK to Firebase App Distribution
       uses: w9jds/firebase-action@master
       with:
-        args: appdistribution:distribute flutter_experiements.apk --app "$FIREBASE_APP_ID" --token "$FIREBASE_TOKEN"  --groups "$INPUT_GROUPS" --release-notes "New version of flutter experiments is available."
+        args: appdistribution:distribute flutter_experiements.apk --app $FIREBASE_APP_ID --token $FIREBASE_TOKEN  --groups $INPUT_GROUPS
       env:
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_APP_ID }}
         FIREBASE_APP_ID: ${{ secrets.FIREBASE_TOKEN }}
