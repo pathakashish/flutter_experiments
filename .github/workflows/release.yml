@@ -2,12 +2,10 @@ name: Release flutter_experiments
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
-on:
-  push:
-    tags:
-      - 'v**'
+on: [push, create]
+  tags:
+    - 'experiment-[0-9]+.[0-9]+*'
 
-        # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   buildForBothAndroidAndiOS:
     # Run on macos
