@@ -24,17 +24,17 @@ jobs:
       with:
         flutter-version: '1.20.2'
     - run: flutter pub get
-    - run: flutter test
+#     - run: flutter test
     - run: flutter build apk --debug
     - uses: actions/upload-artifact@v2
       with:
         name: flutter_experiements.apk
         path: build/app/outputs/flutter-apk/app-debug.apk
-    - run: flutter build ios --debug --no-codesign
-    - uses: actions/upload-artifact@v2
-      with:
-        name: flutter_experiements.Runner.app
-        path: build/ios/iphoneos/Runner.app
+#     - run: flutter build ios --debug --no-codesign
+#     - uses: actions/upload-artifact@v2
+#       with:
+#         name: flutter_experiements.Runner.app
+#         path: build/ios/iphoneos/Runner.app
 
   deploy:
     name: Deployto firebase
@@ -54,4 +54,4 @@ jobs:
         appId: ${{secrets.FIREBASE_APP_ID}}
         token: ${{secrets.FIREBASE_TOKEN}}
         groups: testers
-        file: flutter_experiments/flutter_experiements.apk
+        file: flutter_experiements.apk
