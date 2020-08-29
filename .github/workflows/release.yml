@@ -2,9 +2,9 @@ name: Release flutter_experiments
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
-on: [push, create]
-  tags:
-    - 'experiment-[0-9]+.[0-9]+*'
+on: [push,create]
+tags:
+  - 'experiment-[0-9]+.[0-9]+*'
 
 jobs:
   buildForBothAndroidAndiOS:
