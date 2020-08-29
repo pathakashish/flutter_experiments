@@ -49,9 +49,10 @@ jobs:
         name: flutter_experiements.apk
         path: flutter_experiements.apk
     - name: UPload the APK to Firebase App Distribution
-      uses: wzieba/Firebase-Distribution-Github-Action@v1.2.2
+      uses: w9jds/firebase-action@master
       with:
-        appId: ${{secrets.FIREBASE_APP_ID}}
-        token: ${{secrets.FIREBASE_TOKEN}}
-        groups: testers
-        file: /home/runner/work/flutter_experiments/flutter_experiments/flutter_experiements.apk
+        args: appdistribution:distribute flutter_experiements.apk --app "$FIREBASE_APP_ID" --token "$FIREBASE_TOKEN"  --groups "$INPUT_GROUPS" --release-notes "New version of flutter experiments is available."
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_APP_ID }}
+        FIREBASE_APP_ID: ${{ secrets.FIREBASE_TOKEN }}
+        INPUT_GROUPS: testers
