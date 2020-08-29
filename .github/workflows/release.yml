@@ -46,7 +46,7 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: flutter_experiements-debug
-      - name: UPload the APK to Firebase App Distribution
+      - name: Upload the APK to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
           appId: ${{secrets.FIREBASE_APP_ID}}
