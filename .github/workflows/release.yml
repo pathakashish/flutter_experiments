@@ -1,0 +1,43 @@
+name: Release flutter_experiments
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  create:
+    tags:
+      - release-*
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  buildForBothAndroidAndiOS:
+    # Run on macos
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-java@v1
+      with:
+        java-version: '12.x'
+    - uses: subosito/flutter-action@v1
+      with:
+        flutter-version: '1.20.2'
+    # TODO Bump the version number before building
+    - run: flutter pub get
+    - run: flutter test
+    - run: flutter build apk --debug # TODO Change it to release when we have signing certs configured
+    - uses: actions/upload-artifact@v2
+      with:
+        name: flutter_experiements.apk
+        path: build/app/outputs/flutter-apk/app-debug.apk
+    - name: UPload the APK to Firebase App Distribution
+      uses: wzieba/Firebase-Distribution-Github-Action@v1
+      with:
+        appId: ${{secrets.FIREBASE_APP_ID}}
+        token: ${{secrets.FIREBASE_TOKEN}}
+        groups: testers
+        file: build/app/outputs/flutter-apk/app-debug.apk
+    - run: flutter build ios --debug --no-codesign # TODO Change it to release when we have signing certs configured
+    - uses: actions/upload-artifact@v2
+      with:
+        name: flutter_experiements.Runner.app
+        path: build/ios/iphoneos/Runner.app
+      # TODO figure out deployment of iOS. How to generate the .ipa file for iOS?
