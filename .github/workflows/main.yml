@@ -28,7 +28,7 @@ jobs:
     - run: flutter build apk --debug
     - uses: actions/upload-artifact@v2
       with:
-        name: flutter_experiements-debug.apk
+        name: flutter_experiements-debug
         path: build/app/outputs/flutter-apk/app-debug.apk
     - run: flutter build ios --debug --no-codesign
     - uses: actions/upload-artifact@v2
@@ -46,8 +46,7 @@ jobs:
     - name: Download Artifact
       uses: actions/download-artifact@master
       with:
-        name: flutter_experiements-debug.apk
-        path: flutter_experiements-debug.apk
+        name: flutter_experiements-debug
     - name: UPload the APK to Firebase App Distribution
       uses: wzieba/Firebase-Distribution-Github-Action@v1
       with:
