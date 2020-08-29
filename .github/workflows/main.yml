@@ -26,10 +26,11 @@ jobs:
     - run: flutter pub get
     - run: flutter test
     - run: flutter build apk --debug
+    - run: mv build/app/outputs/flutter-apk/app-debug.apk build/app/outputs/flutter-apk/flutter_experiements-debug.apk
     - uses: actions/upload-artifact@v2
       with:
         name: flutter_experiements-debug
-        path: build/app/outputs/flutter-apk/app-debug.apk
+        path: build/app/outputs/flutter-apk/flutter_experiements-debug.apk
     - run: flutter build ios --debug --no-codesign
     - uses: actions/upload-artifact@v2
       with:
