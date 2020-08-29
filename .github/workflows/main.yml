@@ -24,20 +24,20 @@ jobs:
       with:
         flutter-version: '1.20.2'
     - run: flutter pub get
-#     - run: flutter test
+    - run: flutter test
     - run: flutter build apk --debug
     - uses: actions/upload-artifact@v2
       with:
-        name: flutter_experiements.apk
+        name: flutter_experiements-debug.apk
         path: build/app/outputs/flutter-apk/app-debug.apk
-#     - run: flutter build ios --debug --no-codesign
-#     - uses: actions/upload-artifact@v2
-#       with:
-#         name: flutter_experiements.Runner.app
-#         path: build/ios/iphoneos/Runner.app
+    - run: flutter build ios --debug --no-codesign
+    - uses: actions/upload-artifact@v2
+      with:
+        name: flutter_experiements.Runner.app
+        path: build/ios/iphoneos/Runner.app
 
   deploy:
-    name: Deployto firebase
+    name: Deploy to firebase
     needs: buildForBothAndroidAndiOS
     runs-on: ubuntu-latest
     steps:
@@ -46,12 +46,13 @@ jobs:
     - name: Download Artifact
       uses: actions/download-artifact@master
       with:
-        name: flutter_experiements.apk
-        path: flutter_experiements.apk
+        name: flutter_experiements-debug.apk
+        path: flutter_experiements-debug.apk
     - name: UPload the APK to Firebase App Distribution
-      uses: w9jds/firebase-action@master
+      uses: wzieba/Firebase-Distribution-Github-Action@v1
       with:
-        args: appdistribution:distribute flutter_experiements.apk --app "$env:FIREBASE_APP_ID" --groups testers
-      env:
-        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+        appId: ${{secrets.FIREBASE_APP_ID}}
+        token: ${{secrets.FIREBASE_TOKEN}}
+        groups: testers
+        file: flutter_experiements.apk-debug.apk
+        debug: true
