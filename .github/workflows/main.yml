@@ -12,33 +12,33 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  buildForBothAndroidAndiOS:
-    # Run on macos
-    runs-on: macos-latest
-    steps:
-    - uses: actions/checkout@v1
-    - uses: actions/setup-java@v1
-      with:
-        java-version: '12.x'
-    - uses: subosito/flutter-action@v1
-      with:
-        flutter-version: '1.20.2'
-    - run: flutter pub get
-    - run: flutter test
-    - run: flutter build apk --debug
-    - uses: actions/upload-artifact@v2
-      with:
-        name: flutter_experiements.apk
-        path: build/app/outputs/flutter-apk/app-debug.apk
-    - run: flutter build ios --debug --no-codesign
-    - uses: actions/upload-artifact@v2
-      with:
-        name: flutter_experiements.Runner.app
-        path: build/ios/iphoneos/Runner.app
+#   buildForBothAndroidAndiOS:
+#     # Run on macos
+#     runs-on: macos-latest
+#     steps:
+#     - uses: actions/checkout@v1
+#     - uses: actions/setup-java@v1
+#       with:
+#         java-version: '12.x'
+#     - uses: subosito/flutter-action@v1
+#       with:
+#         flutter-version: '1.20.2'
+#     - run: flutter pub get
+#     - run: flutter test
+#     - run: flutter build apk --debug
+#     - uses: actions/upload-artifact@v2
+#       with:
+#         name: flutter_experiements.apk
+#         path: build/app/outputs/flutter-apk/app-debug.apk
+#     - run: flutter build ios --debug --no-codesign
+#     - uses: actions/upload-artifact@v2
+#       with:
+#         name: flutter_experiements.Runner.app
+#         path: build/ios/iphoneos/Runner.app
 
   deploy:
     name: Deployto firebase
-    needs: buildForBothAndroidAndiOS
+#     needs: buildForBothAndroidAndiOS
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repo
@@ -54,4 +54,4 @@ jobs:
         appId: ${{secrets.FIREBASE_APP_ID}}
         token: ${{secrets.FIREBASE_TOKEN}}
         groups: testers
-        file: flutter_experiements.apk
+        file: flutter_experiments/flutter_experiements.apk
